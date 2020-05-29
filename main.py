@@ -2,10 +2,21 @@ import sys, pygame,pygame_gui,copy
 import numpy as np
 
 from pygame.locals import*
+from Moveing_objects import Box,Platform
 
-
-
-
+#TODO
+#
+#
+#Add Box and Cell classes
+#
+#
+#
+#
+#
+#
+#
+#
+#
 
 class Main_window():
     def __init__(self,height,width,default = 1):
@@ -31,14 +42,23 @@ class Main_window():
         self.drawing_path = 0 #if path is drawn, 'Draw path' button
         #Objects 
         self.box = None #Box object
+        
         self.platform = None #Platform object
         self.box_path = None #Box path object
         self.controler = None #Platform controler object
         if default:
-            pass
-            #self.setup_objects_default()
+            self.setup_objects_default()
 
-    
+    def setup_objects_default(self):
+        '''
+        Function for setting up default simulation parameters\n
+        Input: None\n
+        Output: None  
+        '''
+        self.platform = Platform((200,200),(10,10),50,self.screen)
+        self.box = Box((40,80),[450,700,0],self.screen)      
+        
+
 
     def setup_buttons(self,size,space,position):
         '''
@@ -53,6 +73,39 @@ class Main_window():
             self.buttons[button_name] = pygame_gui.elements.UIButton(location,button_name,self.UI)
 
 
+    def button_clicked(self,event):
+        '''
+        Function that handles button clicks\n
+        Input: \n
+            event - pygame event object
+        Output: None
+        '''
+        if (event.type == pygame.USEREVENT and event.user_type == pygame_gui.UI_BUTTON_PRESSED): 
+            ## Start/Stop ##
+            if event.ui_element == self.buttons['Start/Stop']:
+                chenage_text = ["Start","Stop"]
+                self.is_sim_run = not self.is_sim_run
+                self.buttons['Start/Stop'].set_text(chenage_text[self.is_sim_run])
+
+            ######## Must add other buttons ######
+        
+       
+
+    def run_sim(self):
+        '''
+        Function handling simulation\n
+        Input: None\n
+        Output: None
+        '''
+        try:
+            self.platform.check_contact(self.box)
+        
+        except:
+            self.is_sim_run = 0
+            self.buttons['Start/Stop'].set_text(chenage_text[self.is_sim_run])
+            print('Cant run sim')
+        
+        self.draw_update_objects()
 
     def draw_update_objects(self):
         '''
@@ -60,6 +113,9 @@ class Main_window():
         Input: None\n
         Output: None
         '''
+        self.screen.fill((0,0,0))
+        self.platform.draw_platform()
+        self.box.draw_box()
 
         self.UI.update(self.clock.tick(30))
         self.UI.draw_ui(self.screen)
@@ -81,7 +137,7 @@ def main():
 
 
 
-        main_window.draw_update_objects()
+        main_window.run_sim()
         pygame.display.update()
         
 
