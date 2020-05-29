@@ -2,12 +2,12 @@ import sys, pygame,pygame_gui,copy
 import numpy as np
 
 from pygame.locals import*
-from Moveing_objects import Box,Platform
-
+from Box import Box
+from Platform import Platform
 #TODO
 #
 #
-#Add Box and Cell classes
+
 #
 #
 #
