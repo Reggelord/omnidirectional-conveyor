@@ -43,10 +43,9 @@ class Platform:
     def get_contact_cell_list(self):
         return self.contact_cells
 
-    def setup_all_cells_vel(self):
-        for row in self.cell_array:
-            for cell in row: 
-                pass
+    def setup_all_cells_vel(self,vector):
+        for cell in self.cell_array:
+            cell.set_velocity(vector)
 
     def update_cells_vel(self,cell_list,vel_list):
         if isinstance(vel_list[0],(float,int)):
@@ -62,6 +61,10 @@ class Platform:
             self.cell_array[cell_x][cell_y].set_velocity(vel_list[i])
     
     def get_cell_vel(self,cell_coordinates):
-        x = cell_coordinates[0]
-        y = cell_coordinates[1]
-        return self.cell_array[x][y].get_velocity()
+        for cell in self.cell_array:
+            temp_coordinate = cell.get_cell_number()
+            if temp_coordinate == cell_coordinates:
+                return cell.get_velocity()
+        
+        
+    

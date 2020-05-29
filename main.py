@@ -98,7 +98,13 @@ class Main_window():
         Output: None
         '''
         try:
+            #self.platform.setup_all_cells_vel([0.5,-1,0.2]) #for testing purpose
             self.platform.check_contact(self.box)
+            contact_list = self.platform.get_contact_cell_list()
+            if contact_list:
+                self.box.move_obj(self.platform.get_cell_vel(contact_list[0].get_cell_number()))
+                
+            
         
         except:
             self.is_sim_run = 0
@@ -116,7 +122,6 @@ class Main_window():
         self.screen.fill((0,0,0))
         self.platform.draw_platform()
         self.box.draw_box()
-
         self.UI.update(self.clock.tick(30))
         self.UI.draw_ui(self.screen)
         

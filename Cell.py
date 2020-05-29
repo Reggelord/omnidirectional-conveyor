@@ -71,7 +71,10 @@ class Cell(pygame.sprite.Sprite):
     def get_collision_shape(self):
         return self.collision_mask
 
-        
+    def get_cell_number(self):
+        return self.number
+
+
     def change_contact_color(self,contact):
         if contact:
             self.box_color = (190,150,255,170)
