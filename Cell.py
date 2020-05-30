@@ -9,7 +9,7 @@ class Cell(pygame.sprite.Sprite):
         self.window = window
         self.size = size # square platform heihgt
         self.position = position #Center postion of square
-        self.number = []
+        self.number = number
 
         self.image = pygame.transform.scale(pygame.image.load('sprites/cell.png'),(self.size,self.size))
         self.rect = self.image.get_rect()

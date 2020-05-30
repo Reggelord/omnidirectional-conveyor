@@ -4,10 +4,12 @@ from Cell import Cell
 
 class Platform:
 
-    def __init__(self,start_position,size,cell_size,window):
+    def __init__(self,start_position,size,cell_size,window,cell_max_vel=[1,1,0.2],cell_acc = [0.1,0.01]):
         self.size = size #size of the platform. Height and width
         self.window = window
         self.cell_size = cell_size
+        self.cell_max_vel = cell_max_vel #max velocity of the cells
+        self.cell_acc = cell_acc # max acceleration of the cell
         self.pos = start_position # (0,0) position of platform
         self.cell_array = pygame.sprite.Group()
         self.update_cell_array(self.size[0],self.size[1])
@@ -54,17 +56,19 @@ class Platform:
         if len(cell_list) != len(vel_list):
             print("Error, not enough parameters")
 
-        for i,cell in enumerate(cell_list):
+        for cell in cell_list:
             
-            cell_x = cell[0]
-            cell_y = cell[1]
-            self.cell_array[cell_x][cell_y].set_velocity(vel_list[i])
+            cell_coordinates = [cell[0],cell[1]]
+            self.get_cell_by_number(cell_coordinates).set_velocity(vel_list[i])
     
     def get_cell_vel(self,cell_coordinates):
+        
+        return self.get_cell_by_number(cell_coordinates).get_velocity()
+        
+        
+    def get_cell_by_number(self,cell_number):
         for cell in self.cell_array:
             temp_coordinate = cell.get_cell_number()
-            if temp_coordinate == cell_coordinates:
-                return cell.get_velocity()
-        
-        
-    
+            if temp_coordinate == cell_number:
+                return cell
+

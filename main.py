@@ -42,7 +42,6 @@ class Main_window():
         self.drawing_path = 0 #if path is drawn, 'Draw path' button
         #Objects 
         self.box = None #Box object
-        
         self.platform = None #Platform object
         self.box_path = None #Box path object
         self.controler = None #Platform controler object
@@ -98,7 +97,7 @@ class Main_window():
         Output: None
         '''
         try:
-            #self.platform.setup_all_cells_vel([0.5,-1,0.2]) #for testing purpose
+            self.platform.setup_all_cells_vel([0.5,-1,0.2]) #for testing purpose
             self.platform.check_contact(self.box)
             contact_list = self.platform.get_contact_cell_list()
             if contact_list:
