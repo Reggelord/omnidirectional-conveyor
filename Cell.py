@@ -2,7 +2,7 @@ import pygame,copy
 
 class Cell(pygame.sprite.Sprite):
     
-    def __init__(self,size,number,position,window):
+    def __init__(self,size,number,position,window,font):
 
         pygame.sprite.Sprite.__init__(self)
         # Physic parameters
@@ -23,10 +23,13 @@ class Cell(pygame.sprite.Sprite):
         self.if_box = 0 #if box on the cell
 
         #Drawing parameters
-
         self.box_color = (255,255,255)
         self.line_color = (0,255,0)
         self.ID = 0
+
+        #Debug
+        self.font = font
+        self.text_position = self.draw_position
 
     def get_velocity(self,print_vel = 0):
         '''
@@ -48,7 +51,7 @@ class Cell(pygame.sprite.Sprite):
         '''
         self.velocity = vector
         
-    def draw_cell(self):
+    def draw_cell(self,debug=0):
         '''
         Function to draw cell
 
@@ -61,6 +64,9 @@ class Cell(pygame.sprite.Sprite):
         contact_surface = pygame.Surface((self.size,self.size),pygame.SRCALPHA)
         contact_surface.fill(self.box_color)
         self.window.blit(contact_surface,self.draw_position)
+        if debug == 1:
+            self.draw_arrow()
+            self.draw_text() #draw
         
     def draw_arrow(self):
         start_point = (self.position)
@@ -73,6 +79,13 @@ class Cell(pygame.sprite.Sprite):
 
     def get_cell_number(self):
         return self.number
+
+    def draw_text(self):
+        self.text_background = pygame.Rect(self.draw_position[0], self.draw_position[1], 40, 15) #Create shape 
+        pygame.draw.rect(self.window,(0,0,0),self.text_background)
+        text_to_print = str(self.velocity[0]) + ' ;' + str(self.velocity[1]) + ' ;' + str(self.velocity[2])
+        text = self.font.render(str(text_to_print), False, (255, 255, 255))
+        self.window.blit(text,self.text_position)
 
 
     def change_contact_color(self,contact):

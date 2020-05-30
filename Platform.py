@@ -4,9 +4,10 @@ from Cell import Cell
 
 class Platform:
 
-    def __init__(self,start_position,size,cell_size,window,cell_max_vel=[1,1,0.2],cell_acc = [0.1,0.01]):
+    def __init__(self,start_position,size,cell_size,window,font,cell_max_vel=[1,1,0.2],cell_acc = [0.1,0.01]):
         self.size = size #size of the platform. Height and width
         self.window = window
+        self.font = font
         self.cell_size = cell_size
         self.cell_max_vel = cell_max_vel #max velocity of the cells
         self.cell_acc = cell_acc # max acceleration of the cell
@@ -16,20 +17,25 @@ class Platform:
         self.contact_cells = []
         self.click_shape = pygame.Rect(self.pos[0]-cell_size, self.pos[1]-cell_size, self.size[0]*cell_size, self.size[1]*cell_size)
 
+        
+
+
     def update_cell_array(self,width,height):
         for row in range(width):
             for column in range(height):
                 x_pos = self.pos[0]+self.cell_size*row
                 y_pos = self.pos[1]+self.cell_size*column
-                self.cell_array.add(Cell(self.cell_size,[row,column],[x_pos,y_pos],self.window))
+                self.cell_array.add(Cell(self.cell_size,[row,column],[x_pos,y_pos],self.window,self.font))
         
 
-    def draw_platform(self,draw_velocity=0):
+    def draw_platform(self,debug=0):
         
         for cell in self.cell_array:
-            cell.draw_cell()
-            if draw_velocity == 1:
-                cell.draw_arrow()
+            
+            if debug == 1:
+                cell.draw_cell(1)
+            else:
+                cell.draw_cell(0)
 
 
 

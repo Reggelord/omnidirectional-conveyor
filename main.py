@@ -4,19 +4,6 @@ import numpy as np
 from pygame.locals import*
 from Box import Box
 from Platform import Platform
-#TODO
-#
-#
-
-#
-#
-#
-#
-#
-#
-#
-#
-#
 
 class Main_window():
     def __init__(self,height,width,default = 1):
@@ -29,6 +16,9 @@ class Main_window():
         '''
         ## Setup init Pygame ##
         pygame.init()
+        # Initalize text
+        pygame.font.init() 
+        self.font = pygame.font.SysFont("arial", 10,bold = False)
         self.screen = pygame.display.set_mode((width,height))
         self.clock = pygame.time.Clock()
         #Setup GUI
@@ -54,7 +44,7 @@ class Main_window():
         Input: None\n
         Output: None  
         '''
-        self.platform = Platform((200,200),(10,10),50,self.screen)
+        self.platform = Platform((200,200),(10,10),50,self.screen,self.font)
         self.box = Box((40,80),[450,700,0],self.screen)      
         
 
