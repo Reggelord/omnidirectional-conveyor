@@ -87,11 +87,13 @@ class Main_window():
         Output: None
         '''
         try:
-            self.platform.setup_all_cells_vel([0.5,-1,0.2]) #for testing purpose
+            #self.platform.setup_all_cells_vel([0.5,-1,0.2]) #for testing purpose
             self.platform.check_contact(self.box)
             contact_list = self.platform.get_contact_cell_list()
             if contact_list:
-                self.box.move_obj(self.platform.get_cell_vel(contact_list[0].get_cell_number()))
+                self.platform.update_cells_vel(contact_list,[0.5,-1,0.2])
+                
+                self.box.move_obj(self.platform.get_cell_vel([contact_list[0].get_cell_number()]))
                 
             
         
@@ -109,9 +111,9 @@ class Main_window():
         Output: None
         '''
         self.screen.fill((0,0,0))
-        self.platform.draw_platform()
+        self.platform.draw_platform(1)
         self.box.draw_box()
-        self.UI.update(self.clock.tick(30))
+        self.UI.update(self.clock.tick(10))
         self.UI.draw_ui(self.screen)
         
 

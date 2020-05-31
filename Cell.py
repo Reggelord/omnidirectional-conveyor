@@ -2,7 +2,7 @@ import pygame,copy
 
 class Cell(pygame.sprite.Sprite):
     
-    def __init__(self,size,number,position,window,font):
+    def __init__(self,size,number,position,window,font,properties,cell_type=0):
 
         pygame.sprite.Sprite.__init__(self)
         # Physic parameters
@@ -18,6 +18,10 @@ class Cell(pygame.sprite.Sprite):
         self.rect.y = self.draw_position[1]
 
         self.velocity = [0, 0, 0] #velocity of the platform
+        self.max_vel = properties[0]
+        self.max_acc = properties[1]
+        self.type = cell_type
+
         self.if_active = 0
         self.if_active = 0 # if cell is active
         self.if_box = 0 #if box on the cell
@@ -38,6 +42,8 @@ class Cell(pygame.sprite.Sprite):
             print_vel - print current velocity (optional)
         Output: None
         '''
+        
+
         if print_vel == 1:
             print("Velocity of box: x = %.3f, y = %.3f" % (self.velocity[0], self.velocity[1],self.velocity[2]))
         return self.velocity
@@ -49,7 +55,28 @@ class Cell(pygame.sprite.Sprite):
             vector - list/vector [x_vel,y_vel,omega_vel]
         Output: None
         '''
-        self.velocity = vector
+        #if requested velocity higher than max set it to max
+        higher_than_max = 0 
+        for i,x in enumerate(vector):
+            if x > self.max_vel[i]:
+
+                x = self.max_vel[i]
+                if higher_than_max == 0:
+                    higher_than_max = 1
+        #print information
+        if higher_than_max:
+            print("Requested velocity higher than max" + str(self.max_vel) + "\nMax velocity have been set" )
+        
+
+        if self.type == 0:
+            for i,x in enumerate(vector):
+                if self.velocity[i] < x:
+                    self.velocity[i] += self.max_acc[i]
+
+                if self.velocity[i] > x:
+                    self.velocity[i] =x
+
+        
         
     def draw_cell(self,debug=0):
         '''
