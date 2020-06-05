@@ -4,12 +4,13 @@ from Cell import Cell
 
 class Platform:
 
-    def __init__(self,start_position,size,cell_size,window,font,cell_max_vel=[1,1,0.2],cell_acc = [0.1,0.1,0.01]):
+    def __init__(self,start_position,size,cell_size,window,font,sim_speed,cell_max_vel=[1,1,0.2],cell_acc = [0.1,0.1,0.01]):
         self.size = size #size of the platform. Height and width
         self.window = window
         self.font = font
         self.cell_size = cell_size
-        self.properties = [cell_max_vel,cell_acc] # 
+        self.properties = [cell_max_vel,cell_acc,sim_speed] # 
+        
         self.pos = start_position # (0,0) position of platform
         self.cell_array = pygame.sprite.Group()
         self.update_cell_array(self.size[0],self.size[1])

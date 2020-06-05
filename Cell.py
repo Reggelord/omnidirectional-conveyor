@@ -17,9 +17,13 @@ class Cell(pygame.sprite.Sprite):
         self.rect.x = self.draw_position[0]
         self.rect.y = self.draw_position[1]
 
-        self.velocity = [0, 0, 0] #velocity of the platform
+        self.sim_speed = properties[2]
         self.max_vel = properties[0]
         self.max_acc = properties[1]
+        
+
+        self.velocity = [0, 0, 0]#velocity of the platform
+
         self.type = cell_type
 
         self.if_active = 0
@@ -71,7 +75,8 @@ class Cell(pygame.sprite.Sprite):
         if self.type == 0:
             for i,x in enumerate(vector):
                 if self.velocity[i] < x:
-                    self.velocity[i] += self.max_acc[i]
+                    self.velocity[i] += self.max_acc[i]/ self.sim_speed
+                    
 
                 if self.velocity[i] > x:
                     self.velocity[i] =x

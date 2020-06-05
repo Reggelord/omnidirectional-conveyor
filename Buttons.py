@@ -1,7 +1,7 @@
 import pygame_gui, pygame
 
 class Buttons():
-    def __init__(self,window,clock,buttons_location = [[150,40],10],buttons_size = [5,280],clock_speed=30):
+    def __init__(self,window,clock,clock_speed,buttons_location = [[150,40],10],buttons_size = [5,280]):
 
         self.window = window
         self.UI = pygame_gui.UIManager((800, 600), 'data/themes/quick_theme.json')
@@ -69,13 +69,10 @@ class Buttons():
     def update_events(self,event):
         self.button_clicked(event)
         self.UI.process_events(event)
-        
     
     def draw_buttons(self):
-        self.UI.update(self.clock.tick(self.clock_speed))
+        self.UI.update(self.clock.tick(100))
         self.UI.draw_ui(self.window)
 
     def get_simulaion_state(self):
-        
-
         return self.is_sim_run, self.is_reset

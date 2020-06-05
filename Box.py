@@ -3,7 +3,7 @@ import pygame,copy
 
 class Box(pygame.sprite.Sprite):
     
-    def __init__(self,size,position,window):
+    def __init__(self,size,position,sim_speed,window):
         pygame.sprite.Sprite.__init__(self)
         # Main parameters
         self.window = window
@@ -11,7 +11,7 @@ class Box(pygame.sprite.Sprite):
         self.position = position #Center postion of square [x,y,omega]
         self.velocity = [0, 0, 0] #velocity of the platform [V_x,V_y,omega]
         self.box_color = (0,0,255)
-
+        self.sim_speed = sim_speed
         self.box_sprite = pygame.image.load('sprites/box.png')#size 10 * 10
         self.box_sprite =pygame.transform.scale(self.box_sprite,self.size)
         self.image = self.box_sprite
@@ -31,9 +31,9 @@ class Box(pygame.sprite.Sprite):
 
     def move_obj(self,vector):
         #update positions
-        self.position[0] +=  vector[0]
-        self.position[1] +=  vector[1]
-        self.position[2] +=  vector[2]
+        self.position[0] +=  vector[0]/self.sim_speed
+        self.position[1] +=  vector[1]/self.sim_speed
+        self.position[2] +=  vector[2]/self.sim_speed
 
 
         #update display

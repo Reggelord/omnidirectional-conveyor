@@ -7,7 +7,7 @@ from Platform import Platform
 from Buttons import Buttons
 
 class Main_window():
-    def __init__(self,height,width,default = 1):
+    def __init__(self,height,width,sim_speed=2,default = 1):
         '''
         Initialize simulation
         Input:\n
@@ -17,6 +17,7 @@ class Main_window():
         '''
         ## Setup init Pygame ##
         pygame.init()
+        self.sim_speed = 1/sim_speed #seconds
         # Initalize text
         pygame.font.init() 
         self.font = pygame.font.SysFont("arial", 10,bold = False)
@@ -26,7 +27,7 @@ class Main_window():
         self.is_sim_run = 0
         self.is_reset = 0
         #Objects 
-        self.buttons = Buttons(self.screen,self.clock)
+        self.buttons = Buttons(self.screen,self.clock,self.sim_speed)
         self.box = None #Box object
         self.platform = None #Platform object
         self.box_path = None #Box path object
@@ -44,8 +45,8 @@ class Main_window():
         Input: None\n
         Output: None  
         '''
-        self.platform = Platform((200,200),(10,10),50,self.screen,self.font)
-        self.box = Box((40,80),[450,700,0],self.screen)       
+        self.platform = Platform((200,200),(10,10),50,self.screen,self.font,self.sim_speed)
+        self.box = Box((40,80),[450,700,0],self.sim_speed,self.screen)       
 
     def run_sim(self):
         '''
@@ -102,7 +103,6 @@ def main():
                 sys.exit(0)
             
 
-        
 
         main_window.run_sim()
         pygame.display.update()
