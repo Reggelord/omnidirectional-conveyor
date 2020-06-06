@@ -62,7 +62,7 @@ class Cell(pygame.sprite.Sprite):
         #if requested velocity higher than max set it to max
         higher_than_max = 0 
         for i,x in enumerate(vector):
-            if x > self.max_vel[i]:
+            if abs(x) > abs(self.max_vel[i]):
 
                 x = self.max_vel[i]
                 if higher_than_max == 0:
@@ -74,11 +74,11 @@ class Cell(pygame.sprite.Sprite):
 
         if self.type == 0:
             for i,x in enumerate(vector):
-                if self.velocity[i] < x:
-                    self.velocity[i] += self.max_acc[i]/ self.sim_speed
+                sign = lambda x: x and (1, -1)[x < 0]
+                if abs(self.velocity[i]) < abs(x):
+                    self.velocity[i] += sign(x)*self.max_acc[i]/ self.sim_speed
                     
-
-                if self.velocity[i] > x:
+                if abs(self.velocity[i]) > abs(x):
                     self.velocity[i] =x
 
         
